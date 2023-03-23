@@ -22,8 +22,7 @@ while not is_finished:
             6.    WEBM
 
             Select: """))
-
-        # si formato inicial == numero elegido
+        
         if initial_format == dicc[chosen_format]:
             print("\nCan't choice same format!")
             continue
