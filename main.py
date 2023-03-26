@@ -9,29 +9,30 @@ result = ""
 def convert_video(chosen_format):
     global result
 
-    current_dir = os.path.dirname(__file__)  
+    current_dir = os.path.dirname(__file__)
 
     video_path = current_dir + "/video/brujula.mp4"
     video_name = video_path[video_path.rindex("/")+1:video_path.rindex(".")]
     clip = VideoFileClip(video_path)
     initial_format = video_path[video_path.index(".")+1:]
-    dicc = {1: "avi", 2: "mp4", 3: "mov", 4: "wmv", 5: "mkv", 6: "webm"}
+    dict_options = {1: "avi", 2: "mp4", 3: "mov",
+                    4: "wmv", 5: "mkv", 6: "webm", 7: "gif"}
 
     try:
         chosen_format = int(chosen_format)
 
-        if initial_format == dicc[chosen_format]:
+        if initial_format == dict_options[chosen_format]:
             result = "Can't choice same format!"
             label_result.config(text=result)
         else:
-            # result = "Converting..."
-            # label_result.config(text=result)
+            result = "Converting..."
+            label_result.config(text=result)
 
             if chosen_format == 7:
                 clip.write_gif(f"{current_dir}/result/gif/{video_name}.gif")
             else:
                 clip.write_videofile(
-                    f"{current_dir}/result/video/{video_name}.{dicc[chosen_format]}", codec='libx264')
+                    f"{current_dir}/result/video/{video_name}.{dict_options[chosen_format]}", codec='libx264')
 
             result = "Successful!"
             label_result.config(text=result)
@@ -39,6 +40,7 @@ def convert_video(chosen_format):
     except ValueError:
         result = "Error: you have to choice a valid option!"
         label_result.config(text=result)
+
 
 # tkinter: la parte grafica
 root = tk.Tk()
@@ -62,7 +64,8 @@ label_options = '''
     7.    GIF
 
     Select:'''
-label_options = tk.Label(frame, text=label_options, bg="#bfc1c2")
+
+label_options = tk.Label(frame, text=label_options, bg="#bfc1c2", fg="maroon")
 
 entry = tk.Entry(frame)
 entry.config(font=('Arial', 12), width=7, bg="#004953", fg="white")
